@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Connections</title>
+        <link href="./public/style.css" rel="stylesheet">
+    </head>
+    <body>
+      <div class="container">
+
+        <div class="top">
+          <div class="left">
+            <h1 class="title">Connections</h1>
+            <p class="sub">A implementation of D3's force-directed graph layout for non-developers</p>
+            <p class="how-to">
+              Start by adding a source and the target it connects to. Each target you add will be a source for new targets. When you're ready to see the connections rendered in the graph, click the update button.
+            </p>
+            <button class="update" onclick="update()">update</button>
+          </div>
+          <div class="right">
+            <div id="graph-container" class="graph-container">
+            </div>
+          </div>
+        </div>
+
+        <div class="middle">
+          <div class="row">
+            <input class="connection-input" type="text" />
+            <input class="connection-input" type="text" />
+            <button class="round plus" onclick="addConnection(this)">+</button>
+          </div>
+        </div>
+
+        <div class="bottom">
+          <!-- user controls for graph -->
+        </div>
+
+      </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
+      <script src="./src/app.js"></script>
+    </body>
+</html>

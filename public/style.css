@@ -1,0 +1,81 @@
+/*
+ * page
+ */
+body {
+  font-family: sans-serif;
+}
+
+.container {
+  padding: 5vh 10vw;
+}
+
+/*
+ * description
+ */
+.top {
+  margin-bottom: 60px;
+  display: flex;
+  flex-flow: row wrap;
+}
+.left {
+  display: inline-block;
+  flex-basis: 50%;
+}
+.title {
+  margin-top: 0;
+}
+
+.sub {
+  font-style: italic;
+}
+
+.how-to {
+
+}
+
+/*
+ * svg
+ */
+.right {
+  display: inline-block;
+  flex-basis: 50%;
+
+}
+
+.graph-container {
+  margin: 0 auto;
+  -webkit-box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.75);
+}
+
+
+/*
+ * user inputs
+ */
+.middle {
+
+}
+.row {
+
+}
+
+.connection-input {
+
+}
+
+.round {
+
+}
+
+.plus {
+
+}
+
+
+/*
+ * graph control
+ */
+.bottom {
+
+}
