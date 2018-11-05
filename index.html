@@ -13,7 +13,7 @@
             <h1 class="title">Connections</h1>
             <p class="sub">A implementation of D3's force-directed graph layout for non-developers</p>
             <p class="how-to">
-              Start by adding a source and the target it connects to. Each target you add will be a source for new targets. When you're ready to see the connections rendered in the graph, click the update button.
+              Connections exist between sources and targets. Start by adding a source and its targets. Sources can have multiple targets, and items can be both sources and targets. When you're ready to see the connections rendered in the graph, click the update button. 
             </p>
             <button class="update" onclick="update()">update</button>
           </div>
@@ -25,9 +25,18 @@
 
         <div class="middle">
           <div class="row">
-            <input class="connection-input" type="text" />
-            <input class="connection-input" type="text" />
-            <button class="round plus" onclick="addConnection(this)">+</button>
+            <div class="col">
+              <label class="label" for="source">Source:</label>
+              <input class="connection-input" type="text" />
+            </div>
+            <div class="col">
+              <label class="label" for="target">Targets:</label>
+              <input class="connection-input" type="text" />
+              <button class="round plus" onclick="addTarget(this)">+</button>
+            </div>
+          </div>
+          <div class="button-row">
+            <button class="btn" onclick="addSource(this)">Add Source</button>
           </div>
         </div>
 
@@ -36,6 +45,7 @@
         </div>
 
       </div>
+      <!-- <script src="./node_modules/d3/dist/d3.min.js"></script> -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
       <script src="./src/app.js"></script>
     </body>

@@ -1,4 +1,10 @@
 /*
+ * boilerplate
+ */
+const removeDuplicates = arr => arr
+  .filter((item, pos, self) => self.indexOf(item) == pos)
+
+/*
  * Initialize SVG
  */
 
@@ -15,18 +21,30 @@ const svg = d3.select('#graph-container')
 
 /*
  * Handle user input
- * TODO: distinguish input types with labels/wrappers/classes
- * // QUESTION: should adding a source and target be different?
  */
-function addConnection(button) {
-  // create new row with source input
+function addTarget(button) {
+  const targetInput = document.createElement('input')
+  targetInput.type = "text"
+  targetInput.classList.add('connection-input')
+
+  button.parentNode.insertBefore(targetInput, button)
+}
+
+function addSource(button) {
   const row = document.createElement('div')
   row.classList.add('row')
+
+  const sourceLabel = document.createElement('label')
+  sourceLabel.innerHTML = "Source:"
+  sourceLabel.classList.add('label')
 
   const sourceInput = document.createElement('input')
   sourceInput.type = "text"
   sourceInput.classList.add('connection-input')
-  sourceInput.value = button.previousElementSibling.value
+
+  const targetLabel = document.createElement('label')
+  targetLabel.innerHTML = "Targets:"
+  targetLabel.classList.add('label')
 
   const firstTarget = document.createElement('input')
   firstTarget.type = "text"
@@ -36,50 +54,58 @@ function addConnection(button) {
   plus.classList.add('round')
   plus.classList.add('plus')
   plus.innerText = "+"
-  plus.onclick = function() { addConnection(this) }
+  plus.onclick = function() { addTarget(this) }
 
-  button.parentNode.parentNode.appendChild(row)
-  row.appendChild(sourceInput)
-  row.appendChild(firstTarget)
-  row.appendChild(plus)
+  const col1 = document.createElement('div')
+  col1.classList.add('col')
+  const col2 = document.createElement('div')
+  col2.classList.add('col')
 
-  // create a new target input
-  const targetInput = document.createElement('input')
-  targetInput.type = "text"
-  targetInput.classList.add('connection-input')
-
-  button.parentNode.insertBefore(targetInput, button)
+  button.parentNode.parentNode.insertBefore(row, button.parentNode)
+  row.appendChild(col1)
+  col1.appendChild(sourceLabel)
+  col1.appendChild(sourceInput)
+  row.appendChild(col2)
+  col2.appendChild(targetLabel)
+  col2.appendChild(firstTarget)
+  col2.appendChild(plus)
 }
 
 
 function update() {
-  let dataset = {
-    nodes: [
-
-    ],
-    edges: [
-
-    ]
-  }
+  let nodes = []
+  let edges = []
   const rows = document.querySelectorAll('.row')
+
   rows.forEach(row => {
-    const inputs = row.querySelectorAll('.connection-input')
-    const source = inputs[0].value
+    // add source to list of nodes if not already there
+    const source = row.querySelectorAll('.col')[0].querySelectorAll('.connection-input')[0].value
+    if (!nodes.map(n => n.id).includes(source)) {
+      nodes.push({ id: source })
+    }
+
+    const inputs = row.querySelectorAll('.col')[1].querySelectorAll('.connection-input')
     inputs.forEach(input => {
-      if (input.value && !dataset.nodes.map(n => n.name).includes(input.value)) {
-        dataset.nodes.push({ name: input.value })
+      // add input to list of nodes if not already there
+      if (input.value && !nodes.map(n => n.id).includes(input.value)) {
+        nodes.push({ id: input.value })
       }
+      // create edges to connect source to target
       const mapping = { source: source, target: input.value }
-      if (source != input.value && !dataset.edges.includes(mapping)) {
-        dataset.edges.push(mapping)
+      if (source != input.value && !edges.includes(mapping)) {
+        edges.push(mapping)
       }
     })
   })
-  const processed = {
-    nodes: dataset.nodes,
-    edges: dataset.edges.filter(edge => edge.source.length && edge.target.length)
+  // remove empty values
+  const nonNullNodes = nodes.filter(node => node.id.length)
+  const nonNullEdges = edges.filter(edge => edge.source.length && edge.target.length)
+
+  const dataset = {
+    nodes: nodes,
+    edges: removeDuplicates(nonNullEdges)
   }
-  renderGraph(processed)
+  renderGraph(dataset)
 }
 
 
@@ -89,7 +115,7 @@ function renderGraph(dataset) {
 
   const force = d3.forceSimulation(dataset.nodes)
     .force('charge', d3.forceManyBody())
-    .force('link', d3.forceLink(dataset.edges).id(d => d.name))
+    .force('link', d3.forceLink(dataset.edges).id(d => d.id))
     .force('center', d3.forceCenter().x(w/2).y(h/2))
 
   const edges = svg.append('g')
@@ -116,7 +142,7 @@ function renderGraph(dataset) {
     )
 
   nodes.append('title')
-    .text(d => d.name)
+    .text(d => d.id)
 
   force.on('tick', () => {
     edges.attr('x1', d => d.source.x)
