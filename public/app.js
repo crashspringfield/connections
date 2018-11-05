@@ -7,16 +7,10 @@ const removeDuplicates = arr => arr
 /*
  * Initialize SVG
  */
-
 const w = 500
 const h = 400
-
-const colors = d3.scaleOrdinal(d3.schemeCategory10)
-
 const svg = d3.select('#graph-container')
   .append('svg')
-  .attr('width', w)
-  .attr('height', h)
 
 
 /*
@@ -51,6 +45,7 @@ function addSource(button) {
   firstTarget.classList.add('connection-input')
 
   const plus = document.createElement('button')
+  plus.classList.add('btn')
   plus.classList.add('round')
   plus.classList.add('plus')
   plus.innerText = "+"
@@ -71,7 +66,6 @@ function addSource(button) {
   col2.appendChild(plus)
 }
 
-
 function update() {
   let nodes = []
   let edges = []
@@ -80,11 +74,13 @@ function update() {
   rows.forEach(row => {
     // add source to list of nodes if not already there
     const source = row.querySelectorAll('.col')[0].querySelectorAll('.connection-input')[0].value
+
     if (!nodes.map(n => n.id).includes(source)) {
       nodes.push({ id: source })
     }
 
     const inputs = row.querySelectorAll('.col')[1].querySelectorAll('.connection-input')
+
     inputs.forEach(input => {
       // add input to list of nodes if not already there
       if (input.value && !nodes.map(n => n.id).includes(input.value)) {
@@ -97,6 +93,7 @@ function update() {
       }
     })
   })
+
   // remove empty values
   const nonNullNodes = nodes.filter(node => node.id.length)
   const nonNullEdges = edges.filter(edge => edge.source.length && edge.target.length)
@@ -110,6 +107,7 @@ function update() {
 
 
 function renderGraph(dataset) {
+  // remove previous layers
   svg.select('#edges').remove()
   svg.select('#nodes').remove()
 
@@ -134,7 +132,7 @@ function renderGraph(dataset) {
     .enter()
     .append('circle')
     .attr('r', 10)
-    .style('fill', (d, i) => colors(i))
+    .style('fill', '#3dc21b')
     .call(d3.drag()
       .on('start', dragStarted)
       .on('drag', dragging)
