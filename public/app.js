@@ -9,6 +9,9 @@ const removeDuplicates = arr => arr
  */
 const w = 500
 const h = 400
+const defaultRadius = 10
+const defaultDistance = 45
+const defaultColor = "3dc21b"
 const svg = d3.select('#graph-container')
   .append('svg')
 
@@ -26,7 +29,7 @@ function addTarget(button) {
 
 function addSource(button) {
   const row = document.createElement('div')
-  row.classList.add('row')
+  row.classList.add('input-row')
 
   const sourceLabel = document.createElement('label')
   sourceLabel.innerHTML = "Source:"
@@ -69,7 +72,7 @@ function addSource(button) {
 function update() {
   let nodes = []
   let edges = []
-  const rows = document.querySelectorAll('.row')
+  const rows = document.querySelectorAll('.input-row')
 
   rows.forEach(row => {
     // add source to list of nodes if not already there
@@ -111,9 +114,23 @@ function renderGraph(dataset) {
   svg.select('#edges').remove()
   svg.select('#nodes').remove()
 
+  // get user input or revert to default
+  const radius = document.getElementById('radius').value
+    ? document.getElementById('radius').value
+    : defaultRadius
+  const distance = document.getElementById('distance').value
+    ? document.getElementById('distance').value
+    : defaultDistance
+  const color = document.getElementById('color').value
+    ? document.getElementById('color').value
+    : defaultColor
+
   const force = d3.forceSimulation(dataset.nodes)
     .force('charge', d3.forceManyBody())
-    .force('link', d3.forceLink(dataset.edges).id(d => d.id))
+    .force('link',
+      d3.forceLink(dataset.edges).id(d => d.id)
+        .distance(distance)
+    )
     .force('center', d3.forceCenter().x(w/2).y(h/2))
 
   const edges = svg.append('g')
@@ -131,8 +148,8 @@ function renderGraph(dataset) {
     .data(dataset.nodes)
     .enter()
     .append('circle')
-    .attr('r', 10)
-    .style('fill', '#3dc21b')
+    .attr('r', radius)
+    .style('fill', `#${color}`)
     .call(d3.drag()
       .on('start', dragStarted)
       .on('drag', dragging)

@@ -1,6 +1,6 @@
 {
   "name": "connections",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "An interactive implementation of D3 force for non-developers",
   "main": "index.js",
   "scripts": {

@@ -6,8 +6,10 @@
         <title>Connections</title>
         <link href="./public/style.css" rel="stylesheet">
         <script src="./public/d3.min.js"></script>
+        <script src="./public/jscolor.js"></script>
     </head>
     <body>
+      <a href="https://github.com/crashspringfield/connections"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png" alt="Fork me on GitHub"></a>
       <div class="container">
 
         <div class="top">
@@ -17,7 +19,21 @@
             <p class="how-to">
               Connections exist between sources and targets. Start by adding a source and its targets. Sources can have multiple targets, and items can be both sources and targets. When you're ready to see the connections rendered in the graph, click the update button.
             </p>
-            <button class="btn update" onclick="update()">Update Diagram</button>
+            <div class="graph-input">
+              <label class="label" for="radius">Circle radius:</label>
+              <input id="radius" type="text" />
+            </div>
+            <div class="graph-input">
+              <label class="label" for="distance">Distance between nodes:</label>
+              <input id="distance" type="text" />
+            </div>
+            <div class="graph-input">
+              <label class="label" for="color">Color:</label>
+              <input id="color" class="jscolor" value="44c767" />
+            </div>
+            <div>
+              <button class="btn update" onclick="update()">Update Diagram</button>
+            </div>
           </div>
           <div class="right">
             <div id="graph-container" class="graph-container">
@@ -26,7 +42,7 @@
         </div>
 
         <div class="middle">
-          <div class="row">
+          <div class="input-row">
             <div class="col">
               <label class="label" for="source">Source:</label>
               <input class="connection-input" type="text" />
@@ -37,13 +53,9 @@
               <button class="btn round plus" onclick="addTarget(this)">+</button>
             </div>
           </div>
-          <div class="button-row">
+          <div class="row">
             <button class="btn" onclick="addSource(this)">Add Source</button>
           </div>
-        </div>
-
-        <div class="bottom">
-          <!-- user controls for graph -->
         </div>
 
       </div>

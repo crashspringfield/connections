@@ -67,6 +67,10 @@ body {
 
 }
 
+.graph-input {
+  margin-bottom: 18px;
+}
+
 /*
  * svg
  */
@@ -103,7 +107,7 @@ svg {
  * user inputs
  */
 .middle {
-
+  margin-bottom: 40px;
 }
 .row {
   margin-bottom: 18px;
