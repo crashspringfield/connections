@@ -4,21 +4,27 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Connections</title>
-        <link href="./public/style.css" rel="stylesheet">
-        <script src="./public/d3.min.js"></script>
-        <script src="./public/jscolor.js"></script>
+        <link href="./public/css/style.css" rel="stylesheet">
+        <script src="./public/js/d3.min.js"></script>
+        <script src="./public/js/jscolor.js"></script>
     </head>
     <body>
       <a href="https://github.com/crashspringfield/connections"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_green_007200.png" alt="Fork me on GitHub"></a>
-      <div class="container">
 
         <div class="top">
-          <div class="left">
+          <div>
             <h1 class="title">Connections</h1>
             <p class="sub">A implementation of D3's force-directed graph layout for non-developers</p>
             <p class="how-to">
               Connections exist between sources and targets. Start by adding a source and its targets. Sources can have multiple targets, and items can be both sources and targets. When you're ready to see the connections rendered in the graph, click the update button.
             </p>
+          </div>
+        </div>
+
+      <div class="container">
+        <div class="middle">
+          <div class="left">
+
             <div class="graph-input">
               <label class="label" for="radius">Circle radius:</label>
               <input id="radius" type="text" />
@@ -41,7 +47,9 @@
           </div>
         </div>
 
-        <div class="middle">
+        <hr />
+
+        <div class="bottom">
           <div class="input-row">
             <div class="col">
               <label class="label" for="source">Source:</label>
@@ -59,6 +67,6 @@
         </div>
 
       </div>
-      <script src="./public/app.js"></script>
+      <script src="./public/js/app.js"></script>
     </body>
 </html>
